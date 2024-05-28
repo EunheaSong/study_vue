@@ -19,24 +19,22 @@
             <img v-bind:src="image" />
           </div>
           <div class="priduct-info">
-            <h1>{{ product }}</h1>
-            <span v-if="onSale">On Sale</span>
-            <span v-else>Sold Out</span>
-            <p v-if="inventory > 10">In Stock</p>
-            <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!</p>
+            <h1>{{ title }}</h1>
+            <p v-if="inStock">In Stock</p>
             <p v-else>Out of Stock</p>
             <ul>
               <li v-for="detail in details">{{ detail }}</li>
             </ul>
             <div
               class="color-circle"
-              v-for="variant in variants"
+              v-for="(variant, index) in variants"
               v-bind:key="variant.id"
-              @mouseover="updateImage(variant.image)"
+              @mouseover="updateVariant(index)"
               v-bind:style="{ backgroundColor: variant.color }"
             ></div>
             <button
-              class="[ inStock ? button : disabledButton ]"
+              class="button"
+              :class="{ disabledButton: !inStock }"
               v-on:click="addToCart"
               v-bind:disabled="!inStock"
             >
