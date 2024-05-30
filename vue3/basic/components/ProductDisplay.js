@@ -35,8 +35,10 @@ app.component("product-display", {
         </button>
       </div>
     </div>
+    <review-list v-if="reviews.length" v-bind:reviews="reviews"></review-list>
+    <review-form @review-submitted="addReview"></review-form>
   </div>`,
-  data: function () {
+  data() {
     return {
       product: "Socks",
       brand: "Vue Mastrey",
@@ -56,6 +58,7 @@ app.component("product-display", {
           quntity: 0,
         },
       ],
+      reviews: [],
     };
   },
   methods: {
@@ -64,6 +67,9 @@ app.component("product-display", {
     },
     updateVariant(index) {
       this.selectedVariant = index;
+    },
+    addReview(review) {
+      this.reviews.push(review);
     },
   },
   computed: {
